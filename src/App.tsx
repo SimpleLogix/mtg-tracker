@@ -9,7 +9,7 @@ import StatsModal from "./components/Stats/StatsModal";
 
 function App() {
   const [openAddGameModal, setOpenAddGameModal] = useState(false);
-  const [openStatsModal, setOpenStatsModal] = useState(true);
+  const [openStatsModal, setOpenStatsModal] = useState(false);
   const [isUserEditing, setIsUserEditing] = useState(false);
 
   const [games, setGames] = useState<Game[]>(loadGames);

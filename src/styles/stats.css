@@ -54,7 +54,7 @@
 .stats-card-children {
     height: 100%;
     width: 100%;
-    font-size:48px;
+    font-size: 48px;
     text-align: start;
     margin-top: 24px;
     font-weight: 600;
@@ -85,23 +85,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .win-loss-draw-container.win {
     background-color: var(--gold);
     color: var(--secondary);
 }
+
 .win-loss-draw-container.draw {
     background-color: var(--quadriary);
     color: var(--secondary);
 }
 
 .tick {
-  width: 75%;
-  height: 1px;
-  border: 1px solid white;
-  opacity: 0.3;
+    width: 75%;
+    height: 1px;
+    border: 1px solid white;
+    opacity: 0.3;
 }
 
 
@@ -110,4 +112,24 @@
     height: 100%;
     width: 100%;
     justify-content: center;
+}
+
+.win-streak>.stats-card>.stats-card-title {
+    font-size: 13px;
+}
+
+.last-ten-games {
+    display: flex;
+    gap: 6px
+}
+
+.last-ten-games>div {
+    width: 16px;
+    height: 16px;
+    background-color: var(--quadriary);
+    border-radius: 50%;
+}
+
+.last-ten-games>div.win {
+    background-color: var(--gold);
 }

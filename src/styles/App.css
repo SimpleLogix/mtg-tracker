@@ -282,12 +282,13 @@
 
 .commander-search-container {
   position: relative;
+  padding-top: 24px;
 }
 
 .commander-input {
   width: 75%;
   height: 36px;
-  padding: 0 14px;
+  padding:  14px;
 
   font-size: 14px;
   font-style: italic;
