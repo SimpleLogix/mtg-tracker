@@ -5,10 +5,13 @@ import AddGameModal from "./components/AddGameModalScreen/AddGameModal";
 import BottomHomeShelf from "./components/HomePage/BottomShelf";
 import { loadGames } from "./utils/LocalStorage";
 import type { Game } from "./utils/Game";
+import StatsModal from "./components/Stats/StatsModal";
 
 function App() {
   const [openAddGameModal, setOpenAddGameModal] = useState(false);
+  const [openStatsModal, setOpenStatsModal] = useState(false);
   const [isUserEditing, setIsUserEditing] = useState(false);
+
   const [games, setGames] = useState<Game[]>(loadGames);
 
   return (
@@ -26,7 +29,7 @@ function App() {
 
       <BottomHomeShelf
         setOpenAddGameModal={setOpenAddGameModal}
-        isUserEditing={isUserEditing}
+        setOpenStatsModal={setOpenStatsModal}
         setIsUserEditing={setIsUserEditing}
       />
 
@@ -35,6 +38,10 @@ function App() {
           onClose={() => setOpenAddGameModal(false)}
           onGameAdded={(game) => setGames((prev) => [game, ...prev])}
         />
+      )}
+
+      {openStatsModal && (
+        <StatsModal onClose={() => setOpenStatsModal(false)} />
       )}
     </>
   );
