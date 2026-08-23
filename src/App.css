@@ -28,16 +28,110 @@
   display: none;
 }
 
-.game-block {
+
+
+.game-card-wrapper {
+  width: 88%;
+  min-height: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-card {
   width: 88%;
   min-height: 120px;
   height: 120px;
   border: 2px solid var(--primary);
   border-radius: 12px;
+  display: flex;
+}
 
+.delete-game-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+
+.delete-game-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.delete-game-button>span{
+  font-size: 16px;
 }
 
 
+.game-card-art {
+  width: 32%;
+  min-width: 32%;
+  height: 100%;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+
+
+  clip-path: polygon(0 0,
+      78% 0,
+      100% 100%,
+      0 100%);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 115%;
+  filter: blur(0.4px);
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.game-card-middle {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-card-commander {
+  overflow-wrap: anywhere;
+  font-size: 24px;
+  font-weight: 450;
+  margin-left: 12px;
+  margin-top: 4px;
+}
+
+.game-card-date {
+  font-size: 18px;
+  padding-bottom: 4px;
+  font-weight: 300;
+}
+
+
+.game-card-end {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 24px;
+
+}
+
+.game-card-end>span {
+  font-size: 36px;
+}
 
 
 .bottom-shelf {
@@ -62,6 +156,7 @@
 
 .bottom-shelf>button:hover {
   background-color: var(--primary-hover);
+  cursor: pointer;
 }
 
 .bottom-shelf>button:active {
@@ -109,6 +204,7 @@
 .modal>button:hover,
 .modal>button:active {
   color: var(--primary);
+  cursor: pointer;
 }
 
 
@@ -122,7 +218,7 @@
   align-content: flex-start;
   gap: 24px;
   width: 100%;
-  height: 65%;
+  height: 100%;
   flex-wrap: wrap;
   overflow-y: auto;
   overflow-x: hidden;
@@ -131,6 +227,7 @@
 }
 
 .commander-container {
+  background-color: var(--bg);
   border: 0.5px solid var(--primary);
   border-radius: 50%;
   width: 100px;
@@ -142,7 +239,7 @@
 }
 
 .commander-container.selected {
-  transform: scale(1.05);
+  transform: scale(1.07);
   box-shadow:
     0 0 0 2px var(--primary),
     0 0 14px var(--primary);
@@ -156,11 +253,10 @@
   border: 0.5px var(--red-opaque)
 }
 
-.search-card:hover,
 .commander-container:hover {
   background-color: var(--bg-hover);
-  cursor: pointer;
   transform: scale(1.04);
+  cursor: pointer;
 }
 
 
@@ -265,10 +361,15 @@
 .search-card:hover {
   background-color: var(--bg-hover);
   transform: scale(1.02);
+  cursor: pointer;
 }
 
 .search-card:last-child {
   border-bottom: none;
+}
+
+.search-card.selected {
+  border: 1px solid white;
 }
 
 
@@ -299,22 +400,74 @@
   font-size: 22px;
 }
 
-
-.wld-buttons-wrapper {
+.wld-button-wrapper {
+  height: 16vh;
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  align-self: flex-end;
+  justify-items: center;
+  margin-top: 1%;
+}
+
+.wld-button {
   width: 90%;
-  height: 16%;
-  margin: 0 auto;
-  margin-top: 10%;
-  margin-bottom: 2%;
+  min-height: 60px;
+  max-height: 120px;
+
 
   border: 1px solid var(--border);
   border-radius: 20px;
-  overflow: hidden;
+  background: var(--bg);
 
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+
+  display: flex;
+}
+
+.wld-button:hover {
+  cursor: grab;
+}
+
+.wld-button:active {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  width: 300%;
+  height: 100%;
+}
+
+.track>div {
+  flex: 0 0 calc(100%);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
+
+.save-button-wrapper {
+  height: 100%;
+  max-height: 60px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.save-button {
+  width: 10%;
+  min-width: 150px;
+  height: 80%;
+  border: 1px solid var(--border);
+  border-radius: 20px;
   background: var(--bg);
 
   box-shadow:
@@ -322,40 +475,18 @@
     inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
-.wld-buttons-wrapper>button {
-  flex: 1;
-
-  border: none;
-  border-right: 1px solid var(--border);
-
-  background: transparent;
-  color: var(--text);
-
-  font-size: 20px;
-  font-weight: 600;
-
+.save-button:hover {
   cursor: pointer;
-
-  transition:
-    background-color 0.15s ease,
-    transform 0.1s ease,
-    box-shadow 0.15s ease;
+  background-color: var(--bg-hover);
+  transform: scale(1.02);
 }
 
-.wld-buttons-wrapper>button {
-  border-right: none;
+.save-button:active {
+  background-color: var(--bg-hover);
+  transform: scale(1.05);
 }
 
-.wld-buttons-wrapper>button:hover {
-  background: color-mix(in srgb, var(--primary) 10%, var(--bg));
-}
-
-.wld-buttons-wrapper>button:active {
-  transform: scale(0.97);
-}
-
-/* Selected state */
-.wld-buttons-wrapper>button.selected {
-  background: color-mix(in srgb, var(--primary) 20%, var(--bg));
-  box-shadow: inset 0 0 20px var(--primary);
+.save-button>.material-symbols-outlined {
+  /* icon size */
+  font-size: 24px;
 }

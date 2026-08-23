@@ -1,95 +1,41 @@
 import { useState } from "react";
 import "./App.css";
-import GameBlock from "./components/GameBlock";
-import AddGameModal from "./components/AddGameModal";
-import type { Commander, Game } from "./types/Game";
+import GameCard from "./components/HomePage/GameCard";
+import AddGameModal from "./components/AddGameModalScreen/AddGameModal";
+import BottomHomeShelf from "./components/HomePage/BottomShelf";
+import { loadGames } from "./utils/LocalStorage";
+import type { Game } from "./utils/Game";
 
 function App() {
-  const [showAddGame, setShowAddGame] = useState(true);
-  const today = new Date().toISOString();
-  const c1: Commander = {
-    id: "1",
-    name: "Chatterfang",
-    img_url: "na",
-    colors: ["d"],
-  }
-    const c2: Commander = {
-      id: "2",
-    name: "Rocco",
-    img_url: "na",
-    colors: ["e"],
-  }
-  const games: Game[] = [
-    {
-      commander: c1,
-      result: "Win",
-      date: today,
-    },
-    {
-      commander: c1,
-      result: "Win",
-      date: "2026-08-06T20:00:00",
-    },
-    {
-      commander: c1,
-      result: "Win",
-      date: today,
-    },
-    {
-      commander: c2,
-      result: "Win",
-      date: "2026-08-06T20:00:00",
-    },
-    {
-      commander: c1,
-      result: "Win",
-      date: today,
-    },
-    {
-      commander: c2,
-      result: "Win",
-      date: "2026-08-06T20:00:00",
-    },
-    {
-      commander: c1,
-      result: "Win",
-      date: today,
-    },
-    {
-      commander: c2,
-      result: "Win",
-      date: "2026-08-06T20:00:00",
-    },
-        {
-      commander: c1,
-      result: "Win",
-      date: today,
-    },
-    {
-      commander: c2,
-      result: "Win",
-      date: "2026-08-06T20:00:00",
-    },
-  ];
+  const [openAddGameModal, setOpenAddGameModal] = useState(false);
+  const [isUserEditing, setIsUserEditing] = useState(false);
+  const [games, setGames] = useState<Game[]>(loadGames);
 
   return (
     <>
       <section className="recent-games">
-        {games.map((game) => (
-          <GameBlock game={game} />
+        {games.map((game, index) => (
+          <GameCard
+            key={index.toString()}
+            game={game}
+            isUserEditing={isUserEditing}
+            onRemove={() => setGames((prev) => prev.filter((g) => g !== game))}
+          />
         ))}
       </section>
 
-      <section className="bottom-shelf">
-        <button onClick={() => setShowAddGame(true)}>
-          <span className="material-symbols-outlined">edit_square</span>
-        </button>
-        <button>
-          <span className="material-symbols-outlined">bar_chart</span>
-        </button>
-      </section>
+      <BottomHomeShelf
+        setOpenAddGameModal={setOpenAddGameModal}
+        isUserEditing={isUserEditing}
+        setIsUserEditing={setIsUserEditing}
+      />
 
-      {showAddGame && <AddGameModal onClose={() => setShowAddGame(false)} />}
+      {openAddGameModal && (
+        <AddGameModal
+          onClose={() => setOpenAddGameModal(false)}
+          onGameAdded={(game) => setGames((prev) => [game, ...prev])}
+        />
+      )}
     </>
   );
 }

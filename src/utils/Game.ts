@@ -1,4 +1,4 @@
-export type GameResult = "Win" | "Loss" | "Draw";
+export type GameResult = "Loss" | "Draw" | "Win";
 
 export interface Commander {
   id: string;
@@ -9,6 +9,7 @@ export interface Commander {
 
 
 export interface Game {
+  id: string,
   commander: Commander;
   result: GameResult;
   date: string;

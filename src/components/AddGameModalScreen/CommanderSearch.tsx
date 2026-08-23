@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { searchCommanders, type ScryfallCard } from "../utils/ScryfallAPI";
-import { addCommander } from "../utils/Utils";
-import type { Commander } from "../types/Game";
+import { searchCommanders, type ScryfallCard } from "../../utils/ScryfallAPI";
+import type { Commander } from "../../utils/Game";
 
 interface CommanderSearchProps {
   onSelect: (commander: Commander) => void;
@@ -11,6 +10,20 @@ export default function CommanderSearch({ onSelect }: CommanderSearchProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ScryfallCard[]>([]);
 
+  // handles when user selects Commander from drop down menu
+  const handleSelect = (card: ScryfallCard) => {
+    const selectedCommander: Commander = {
+      name: card.name,
+      id: card.id,
+      img_url: card.image_uris?.art_crop,
+      colors: card.color_identity,
+    };
+    onSelect(selectedCommander);
+    setQuery("");
+    setResults([]);
+  };
+
+  // Searches after 300ms buffer
   useEffect(() => {
     const timeout = setTimeout(async () => {
       if (!query.trim()) {
@@ -45,19 +58,6 @@ export default function CommanderSearch({ onSelect }: CommanderSearchProps) {
     };
   }, []);
 
-  const handleSelect = (card: ScryfallCard) => {
-    const selectedCommander: Commander = {
-      name: card.name,
-      id: card.id,
-      img_url: card.image_uris?.art_crop,
-      colors: [],
-    };
-    addCommander(selectedCommander);
-    onSelect(selectedCommander);
-    setQuery("");
-    setResults([]);
-  };
-
   const searchRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -70,7 +70,6 @@ export default function CommanderSearch({ onSelect }: CommanderSearchProps) {
       />
 
       <div className="search-card-wrapper">
-        
         {results.map((card) => (
           <div
             className="search-card"
