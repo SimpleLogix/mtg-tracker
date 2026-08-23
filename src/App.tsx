@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+import "./styles/App.css";
 import GameCard from "./components/HomePage/GameCard";
 import AddGameModal from "./components/AddGameModalScreen/AddGameModal";
 import BottomHomeShelf from "./components/HomePage/BottomShelf";
@@ -9,7 +9,7 @@ import StatsModal from "./components/Stats/StatsModal";
 
 function App() {
   const [openAddGameModal, setOpenAddGameModal] = useState(false);
-  const [openStatsModal, setOpenStatsModal] = useState(false);
+  const [openStatsModal, setOpenStatsModal] = useState(true);
   const [isUserEditing, setIsUserEditing] = useState(false);
 
   const [games, setGames] = useState<Game[]>(loadGames);
@@ -22,7 +22,9 @@ function App() {
             key={index.toString()}
             game={game}
             isUserEditing={isUserEditing}
-            onRemove={() => setGames((prev) => prev.filter((g) => g !== game))}
+            onRemove={() =>
+              setGames((prev) => prev.filter((g) => g.id !== game.id))
+            }
           />
         ))}
       </section>

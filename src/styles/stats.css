@@ -1,0 +1,113 @@
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.stats-header {
+    width: 100%;
+    height: 14vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.stats-header-title {
+    font-size: 36px;
+    padding-left: 18px;
+    padding-top: 36px;
+    height: 80%;
+}
+
+.stats-header-subtitle {
+    padding-left: 23px;
+    font-size: 24px;
+    height: 100%;
+    color: #ccae62;
+    font-weight: 200
+}
+
+.stats-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.stats-body>.right,
+.stats-body>.left {
+    height: 100%;
+    width: 50%;
+    padding: 18px;
+    padding-right: 24px;
+}
+
+.stats-card {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stats-card-children {
+    height: 100%;
+    width: 100%;
+    font-size:48px;
+    text-align: start;
+    margin-top: 24px;
+    font-weight: 600;
+}
+
+.stats-card-title {
+    padding-top: 4px;
+    padding-bottom: 8px;
+    font-style: italic;
+    text-align: start;
+    font-size: 16px;
+}
+
+.win-loss-draw-wrapper {
+    display: flex;
+    width: 35%;
+    justify-content: space-between;
+}
+
+.win-loss-draw-container {
+    background-color: var(--primary);
+    font-size: 24px;
+    height: 100%;
+    width: 100%;
+    margin-right: 3px;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+}
+
+.win-loss-draw-container.win {
+    background-color: var(--gold);
+    color: var(--secondary);
+}
+.win-loss-draw-container.draw {
+    background-color: var(--quadriary);
+    color: var(--secondary);
+}
+
+.tick {
+  width: 75%;
+  height: 1px;
+  border: 1px solid white;
+  opacity: 0.3;
+}
+
+
+.win-streak {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
