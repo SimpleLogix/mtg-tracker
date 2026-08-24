@@ -34,7 +34,10 @@ export function removeCommander(commander: Commander) {
 export function loadGames(): Game[] {
     const saved = localStorage.getItem("games");
 
+    console.log("games loaded~")
+
     return saved ? JSON.parse(saved) : [];
+
 }
 
 export function saveGame(game: Game) {
@@ -43,6 +46,9 @@ export function saveGame(game: Game) {
 
     games.unshift(game);
     localStorage.setItem("games", JSON.stringify(games));
+
+    console.log("games saved")
+    
 }
 
 export function clearGames() {
@@ -57,4 +63,5 @@ export function removeGame(game: Game) {
 
     localStorage.setItem("games", JSON.stringify(updatedGames));
 
+    console.log("game removed")
 }

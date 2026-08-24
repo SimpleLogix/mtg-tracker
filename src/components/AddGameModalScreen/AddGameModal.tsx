@@ -9,13 +9,20 @@ import {
 } from "../../utils/LocalStorage";
 import SwipeButton from "./SwipeButton";
 import CommanderSearch from "./CommanderSearch";
+import { generateCommanderStats, type CommanderStats } from "../../utils/Stats";
 
 interface AddGameModalProps {
   onClose: () => void;
-  onGameAdded:(game: Game) => void;
+  onGameAdded: (
+    game: Game,
+    commanderStats: Map<string, CommanderStats>,
+  ) => void;
 }
 
-export default function AddGameModal({ onClose, onGameAdded }: AddGameModalProps) {
+export default function AddGameModal({
+  onClose,
+  onGameAdded,
+}: AddGameModalProps) {
   const [selectedCommander, setSelectedCommander] = useState<Commander | null>(
     null,
   );
@@ -66,7 +73,7 @@ export default function AddGameModal({ onClose, onGameAdded }: AddGameModalProps
         date: now.toDateString(),
       };
       saveGame(newGame);
-      onGameAdded(newGame)
+      onGameAdded(newGame, generateCommanderStats()); // send back the game and new commander stats
       onClose();
     }
   };

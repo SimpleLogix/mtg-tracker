@@ -15,8 +15,11 @@ export default function BottomHomeShelf({
         <span className="material-symbols-outlined">bar_chart</span>
       </button>
 
-      <button onClick={() => setOpenAddGameModal(true)}>
-        <span className="material-symbols-outlined">add</span>
+      <button
+        className="add-game-button"
+        onClick={() => setOpenAddGameModal(true)}
+      >
+        <span className="material-symbols-outlined ">add</span>
       </button>
 
       <button

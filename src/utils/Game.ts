@@ -15,6 +15,11 @@ export interface Game {
   date: string;
 }
 
+// helper function to conver decimal to string percent
+export function formatToPercent(num: number): string {
+  return (num * 100).toFixed(2) + '%'
+}
+
 // helper function to format string date to 
 export function formatRelativeDate(date: string): string {
   const now = new Date();

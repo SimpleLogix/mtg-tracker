@@ -5,16 +5,18 @@ interface GameCardProps {
   game: Game;
   isUserEditing: boolean;
   onRemove: (gameID: string) => void;
+  onClick: () => void;
 }
 
 export default function GameCard({
   game,
   isUserEditing,
   onRemove,
+  onClick,
 }: GameCardProps) {
   return (
     <div className="game-card-wrapper">
-      <div className="game-card">
+      <div className="game-card" onClick={onClick}>
         <div
           className="game-card-art"
           style={{ backgroundImage: `url(${game.commander.img_url})` }}

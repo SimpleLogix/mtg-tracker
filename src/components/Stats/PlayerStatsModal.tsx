@@ -1,14 +1,14 @@
 import Modal from "../AddGameModalScreen/Modal";
 import "../../styles/stats.css";
-import StatsCard from "./StatsCard";
+import StatsCard from "./PlayerStatsCard";
 import { loadStats } from "../../utils/Stats";
-import Last10Games from "./Last10Games";
+import Last10Games from "./LastTenGames";
 
-interface StatsModalProps {
+interface PlayerStatsModalProps {
   onClose: () => void;
 }
 
-export default function StatsModal({ onClose }: StatsModalProps) {
+export default function PlayerStatsModal({ onClose }: PlayerStatsModalProps) {
   const stats = loadStats();
 
   return (

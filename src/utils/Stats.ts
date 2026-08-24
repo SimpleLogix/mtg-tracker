@@ -1,7 +1,7 @@
 import { formatRelativeDate, type Commander, type Game, type GameResult } from "./Game";
 import { loadGames } from "./LocalStorage";
 
-export type Stats = {
+export type PlayerStats = {
     gamesTotal: number;
     commandersPlayed: number;
     winLossDrawTotal: string;
@@ -17,6 +17,75 @@ export type Stats = {
     lastTenGames: GameResult[];
 }
 
+export type CommanderStats = {
+    commander: Commander;
+    gamesTotal: number;
+    winLossDrawTotal: [number, number, number];
+    performance: number;
+    gamesThisMonth: number;
+    currentStreak: number;
+    longestStreak: number;
+    lastTenGames: GameResult[]
+}
+
+export const loadCommanderStats = (): Map<string, CommanderStats> => {
+    const stored = localStorage.getItem("commanderStats");
+
+    const commanderStats = stored
+        ? new Map<string, CommanderStats>(JSON.parse(stored))
+        : new Map<string, CommanderStats>();
+
+    return commanderStats;
+}
+
+export const generateCommanderStats = () => {
+    const games: Game[] = loadGames();
+
+    const commanderGames = new Map<string, {
+        commander: Commander;
+        games: Game[];
+    }>(); // id : {CommanderObj, Games}
+    games.forEach((game) => {
+        const existing = commanderGames.get(game.commander.id);
+
+        if (existing) {
+            existing.games.push(game);
+        } else {
+            commanderGames.set(game.commander.id, {
+                commander: game.commander,
+                games: [game]
+            });
+        }
+    });
+
+    const commanderStats = new Map<string, CommanderStats>();
+
+    commanderGames.forEach((commanderGames, commanderId) => {
+        const winLossDrawTotal = calculateWinLossDrawTotal(commanderGames.games);
+        const winLossDrawRatio = calculateWinLossDrawRate(winLossDrawTotal);
+        const winStreaks = calculateWinStreaks(commanderGames.games)
+
+
+        commanderStats.set(commanderId, {
+            commander: commanderGames.commander,
+            gamesTotal: commanderGames.games.length,
+            winLossDrawTotal: calculateWinLossDrawTotal(commanderGames.games),
+            performance: calculatePerformance(winLossDrawRatio),
+            gamesThisMonth: calculateGamesThisMonthAndYear(commanderGames.games)[0],
+            currentStreak: winStreaks[0],
+            longestStreak: winStreaks[1],
+            lastTenGames: calculateLast10Games(commanderGames.games)
+        });
+    });
+
+    localStorage.setItem(
+        "commanderStats",
+        JSON.stringify(Array.from(commanderStats.entries()))
+    );
+
+    return commanderStats;
+}
+
 export const loadStats = () => {
     const games: Game[] = loadGames();
 
@@ -26,7 +95,7 @@ export const loadStats = () => {
     const winStreaks = calculateWinStreaks(games);
 
 
-    const stats: Stats = {
+    const stats: PlayerStats = {
         gamesTotal: games.length,
         commandersPlayed: calculateCommandersPlayed(games),
         winLossDrawTotal: `${winLossDrawTotal[0]}-${winLossDrawTotal[1]}-${winLossDrawTotal[2]}`,
@@ -41,6 +110,7 @@ export const loadStats = () => {
         longestWinstreak: winStreaks[1],
         lastTenGames: calculateLast10Games(games),
     };
+
 
     return stats;
 };
