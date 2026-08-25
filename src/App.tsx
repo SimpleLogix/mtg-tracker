@@ -25,7 +25,7 @@ function App() {
     useState<Commander | null>(games[0]?.commander ?? null);
 
   return (
-    <>
+    <div className="app">
       <section className="recent-games">
         {games.map((game, index) => (
           <GameCard
@@ -70,7 +70,7 @@ function App() {
           onClose={() => setOpenCommanderStatsModal(false)}
         />
       )}
-    </>
+    </div>
   );
 }
 
