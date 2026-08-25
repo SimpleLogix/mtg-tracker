@@ -20,7 +20,7 @@ function App() {
   const [isUserEditing, setIsUserEditing] = useState(false);
   const [openAddGameModal, setOpenAddGameModal] = useState(false);
   const [openPlayerStatsModal, setOpenPlayerStatsModal] = useState(false);
-  const [openCommanderStatsModal, setOpenCommanderStatsModal] = useState(true);
+  const [openCommanderStatsModal, setOpenCommanderStatsModal] = useState(false);
   const [selectedCommander, setSeletectedCommander] =
     useState<Commander | null>(games[0].commander);
 
