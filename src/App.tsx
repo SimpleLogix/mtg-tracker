@@ -22,7 +22,7 @@ function App() {
   const [openPlayerStatsModal, setOpenPlayerStatsModal] = useState(false);
   const [openCommanderStatsModal, setOpenCommanderStatsModal] = useState(false);
   const [selectedCommander, setSeletectedCommander] =
-    useState<Commander | null>(games[0].commander);
+    useState<Commander | null>(games[0]?.commander ?? null);
 
   return (
     <>
@@ -54,7 +54,7 @@ function App() {
           onClose={() => setOpenAddGameModal(false)}
           onGameAdded={(game, commanderSats) => {
             setGames((prev) => [game, ...prev]);
-            setCommanderStats(commanderSats)
+            setCommanderStats(commanderSats);
           }}
         />
       )}
