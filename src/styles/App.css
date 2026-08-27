@@ -36,10 +36,12 @@
   width: 100%;
   min-height: 120px;
   height: 120px;
-  border: 2px solid var(--primary);
+  border: 1px solid var(--border);
+  background-color: var(--card-bg2);
   border-radius: 12px;
   display: flex;
 }
+
 
 .game-card:hover {
   cursor: pointer;
@@ -107,6 +109,7 @@
   overflow-wrap: anywhere;
   font-size: 24px;
   font-weight: 450;
+  font-style: oblique;
   margin-left: 12px;
   margin-top: 4px;
 }
@@ -199,7 +202,7 @@
 .modal {
   width: 90vw;
   height: 90vh;
-  background: var(--bg);
+  background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   position: relative;
@@ -212,7 +215,7 @@
   align-self: flex-end;
   margin: 15px;
   background-color: transparent;
-  color: var(--secondary);
+  color: var(--text);
   border: 0;
 }
 

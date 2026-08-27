@@ -26,10 +26,11 @@ export default function CommanderStatsModal({
               <div style={{ backgroundImage: `url(${commander.img_url})` }} />
             </div>
           </div>
-          <div className="commander-stats-name">{commander.name}</div>
+          <div className="commander-stats-name">{commander.name}
+          </div>
         </div>
 
-        <WinrateBar winrate={commanderStats.winLossDrawTotal} />
+        <WinrateBar winrate={commanderStats.winLossDrawRate} />
 
         <div className="commander-stats-body">
           <div>
@@ -49,11 +50,10 @@ export default function CommanderStatsModal({
             <div>
               <div className="vertical-tick"></div>
               <CommanderStatsCard title="Performance">
+                <span>{formatToPercent(commanderStats.performance)}</span>
                 <span className="material-symbols-outlined delta-up">
                   Arrow_Drop_Up
                 </span>
-
-                <span>{formatToPercent(commanderStats.performance)}</span>
               </CommanderStatsCard>
             </div>
 

@@ -11,7 +11,7 @@ export default function Last10Games({ gameResults }: Last10GamesProps) {
         return (
           <div
             key={index}
-            className={`${gameResult === "Win" ? "win" : ""}`}
+            className={`${gameResult === "Win" ? "win" : gameResult === "Loss" ? "loss" : ""}`}
           ></div>
         );
       })}

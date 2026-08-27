@@ -17,7 +17,7 @@ export interface Game {
 
 // helper function to conver decimal to string percent
 export function formatToPercent(num: number): string {
-  return (num * 100).toFixed(2) + '%'
+  return (num * 100).toFixed(0) + '%'
 }
 
 // helper function to format string date to 

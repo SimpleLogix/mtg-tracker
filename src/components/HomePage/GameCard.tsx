@@ -34,10 +34,10 @@ export default function GameCard({
           style={{
             color:
               game.result === "Win"
-                ? "#FFC312"
+                ? "var(--gold)"
                 : game.result === "Loss"
-                  ? "#b33939"
-                  : "#d1ccc0",
+                  ? "var(--red)"
+                  : "var(-quadriary)",
           }}
         >
           <span className="material-symbols-outlined">

@@ -21,6 +21,7 @@ export type CommanderStats = {
     commander: Commander;
     gamesTotal: number;
     winLossDrawTotal: [number, number, number];
+    winLossDrawRate: [number, number, number];
     performance: number;
     gamesThisMonth: number;
     currentStreak: number;
@@ -69,7 +70,8 @@ export const generateCommanderStats = () => {
         commanderStats.set(commanderId, {
             commander: commanderGames.commander,
             gamesTotal: commanderGames.games.length,
-            winLossDrawTotal: calculateWinLossDrawTotal(commanderGames.games),
+            winLossDrawTotal: winLossDrawTotal,
+            winLossDrawRate: winLossDrawRatio,
             performance: calculatePerformance(winLossDrawRatio),
             gamesThisMonth: calculateGamesThisMonthAndYear(commanderGames.games)[0],
             currentStreak: winStreaks[0],

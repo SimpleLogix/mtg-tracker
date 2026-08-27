@@ -54,18 +54,20 @@
 .stats-card-children {
     height: 100%;
     width: 100%;
-    font-size: 48px;
+    font-size: clamp(24px, 6vw, 48px);
     text-align: start;
     margin-top: 24px;
     font-weight: 600;
+
 }
 
 .stats-card-title {
     padding-top: 4px;
     padding-bottom: 8px;
-    font-style: italic;
+    font-style: oblique;
     text-align: start;
-    font-size: 16px;
+    font-size: clamp(12px, 2vw, 24px);
+    color: var(--text-secondary)
 }
 
 .win-loss-draw-wrapper {
@@ -91,19 +93,21 @@
 
 .win-loss-draw-container.win {
     background-color: var(--gold);
-    color: var(--secondary);
+    color: var(--text);
 }
 
 .win-loss-draw-container.draw {
     background-color: var(--quadriary);
-    color: var(--secondary);
+    color: var(--text);
+    font-size: clamp(12px, 2vw, 24px);
+    ;
 }
 
 .tick {
     width: 75%;
     height: 1px;
-    border: 1px solid white;
-    opacity: 0.3;
+    border: 1.5px solid var(--quadriary);
+    opacity: 0.65;
 }
 
 
@@ -112,10 +116,6 @@
     height: 100%;
     width: 100%;
     justify-content: center;
-}
-
-.win-streak>.stats-card>.stats-card-title {
-    font-size: 13px;
 }
 
 .last-ten-games {
@@ -131,8 +131,17 @@
 }
 
 .last-ten-games>div.win {
-    background-color: var(--gold);
+    background-color: var(--green);
 }
+
+.last-ten-games>div.loss {
+    background-color: var(--red);
+}
+
+
+/* mobile styles */
+@media (max-width: 600px) {}
+
 
 
 
@@ -159,12 +168,13 @@
 
 .commander-stats-portrait {
     height: 100%;
+
 }
 
 .commander-stats-portrait>div {
     height: 100%;
     padding: 0 36px;
-
+    padding-right: 12px;
     display: flex;
     align-items: center;
 }
@@ -192,7 +202,9 @@
     font-size: 36px;
     font-weight: 500;
     line-height: 40px;
+    font-style: oblique;
 }
+
 
 
 .winrate-bar-wrapper {
@@ -207,12 +219,13 @@
     width: 100%;
     height: 65%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding: 0 36px;
 }
 
 .winrate-bar>div {
-    width: 80%;
+    width: 96%;
     height: 80%;
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -225,7 +238,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: start;
     color: white;
     position: relative;
@@ -243,27 +256,41 @@
 .winrate-bar>div>div:first-child {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    background-color: var(--gold);
-    color: var(--gold);
+    background-color: var(--green);
+    color: var(--green);
 }
 
 .winrate-bar>div>div:nth-child(2) {
     background-color: var(--red);
-    color: var(--red)
+    color: var(--red);
+}
+
+.winrate-bar-last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.winrate-bar-first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
 }
 
 .winrate-bar>div>div:last-child {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    background-color: var(--primary);
-    color: var(--primary)
+    background-color: var(--quadriary);
+    color: var(--quadriary)
 }
 
+
 .winrate-stats {
-    border: 1px solid orange;
     width: 100%;
     height: 35%;
 }
+
+
+
+
 
 
 .commander-stats-body {
@@ -298,11 +325,28 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 12px;
+    text-align: start;
+    gap: 16px;
     padding: 8px;
     font-size: 18px;
+
 }
 
+.commander-stats-card-title {
+    font-size: clamp(12px, 2vw, 24px);
+    color: var(--text-secondary);
+    font-style: oblique;
+}
+
+.commander-stats-card-children {
+    font-size: clamp(12px, 8vw, 48px);
+    width: 100%;
+    height: 100%;
+    padding-top: 4px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
 
 .commander-stats-last-ten {
     width: 100%;
@@ -313,15 +357,72 @@
 .vertical-tick {
     margin: 8px;
     height: 60%;
-    border: 1.5px solid var(--secondary);
+    border: 1.5px solid var(--quadriary);
 }
 
 .delta-up {
     color: var(--green);
-    transform: translateY(6px);
+    font-size: 36px;
 }
 
 .delta-down {
     color: var(--red);
-    transform: translateY(6px);
+}
+
+
+/* mobile styles */
+@media (max-width: 600px) {
+
+    .commander-stats-header {
+        height: 30%;
+    }
+
+    .commander-stats-portrait {
+        height: 100%;
+        width: 50%;
+
+    }
+
+    .commander-stats-portrait>div {
+        padding-left: 18px;
+        min-width: 0;
+    }
+
+    .commander-stats-portrait>div>div {
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+
+    .commander-stats-name {
+        width: 100%;
+        padding: 0px;
+        padding-right: 0px;
+        font-size: 30px;
+        font-weight: 450;
+
+    }
+
+    .winrate-bar {
+        width: 100%;
+        padding: 0 18px;
+
+    }
+
+
+    .commander-stats-card {
+        gap: 12px;
+        padding: 8px 0;
+    }
+
+    .commander-stats-card-title {
+        width: 100%;
+        padding: 0;
+        font-weight: 450;
+
+    }
+
+    .commander-stats-card-children {
+        font-weight: 400;
+    }
 }

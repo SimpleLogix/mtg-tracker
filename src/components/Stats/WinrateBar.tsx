@@ -10,13 +10,22 @@ export default function WinrateBar({ winrate }: WinrateBarProps) {
     <div className="winrate-bar-wrapper">
       <div className="winrate-bar">
         <div>
-          <div style={{ width: formatToPercent(win) }}>
+          <div
+            className={`${draw === 0 && loss === 0 ? "winrate-bar-last-child" : ""}`}
+            style={{ flex: win || 0.0001 }}
+          >
             <span>{formatToPercent(win)}</span>
           </div>
-          <div style={{ width: formatToPercent(loss) }}>
+          <div
+            className={`${draw === 0 ? "winrate-bar-last-child" : win === 0 ? "winrate-bar-first-child" : ""}`}
+            style={{ flex: loss || 0.0001 }}
+          >
             <span>{formatToPercent(loss)}</span>
           </div>
-          <div style={{ width: formatToPercent(draw) }}>
+          <div
+            className={`${win === 0 ? "winrate-bar-first-child" : ""}`}
+            style={{ flex: draw || 0.0001 }}
+          >
             <span>{formatToPercent(draw)}</span>
           </div>
         </div>
