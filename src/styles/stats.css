@@ -12,20 +12,20 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    gap: 16px;
+    padding-top: 36px;
+
 }
 
 .stats-header-title {
     font-size: 36px;
     padding-left: 18px;
-    padding-top: 36px;
-    height: 80%;
 }
 
 .stats-header-subtitle {
     padding-left: 23px;
     font-size: 24px;
-    height: 100%;
-    color: #ccae62;
+    color: var(--gold);
     font-weight: 200
 }
 
@@ -56,9 +56,18 @@
     width: 100%;
     font-size: clamp(24px, 6vw, 48px);
     text-align: start;
-    margin-top: 24px;
-    font-weight: 600;
+    margin-top: 16px;
+    font-weight: 500;
+    color: var(--white);
+}
 
+.stats-performance-card {
+    display: flex;
+    align-items: flex-start;
+}
+
+.stats-performance-card>span {
+    transform: translateY(-4px);
 }
 
 .stats-card-title {
@@ -77,7 +86,7 @@
 }
 
 .win-loss-draw-container {
-    background-color: var(--primary);
+    background-color: var(--red);
     font-size: 24px;
     height: 100%;
     width: 100%;
@@ -89,18 +98,20 @@
     justify-content: center;
     font-weight: 600;
     font-size: 18px;
+    font-size: clamp(12px, 3vw, 24px);
+    border: 1px solid var(--border);
+    box-shadow: var(--subtle-shadow);
 }
 
 .win-loss-draw-container.win {
-    background-color: var(--gold);
-    color: var(--text);
+    background-color: var(--green);
+    color: var(--white);
 }
 
 .win-loss-draw-container.draw {
     background-color: var(--quadriary);
-    color: var(--text);
-    font-size: clamp(12px, 2vw, 24px);
-    ;
+    color: var(--white);
+
 }
 
 .tick {
@@ -120,14 +131,18 @@
 
 .last-ten-games {
     display: flex;
-    gap: 6px
+    gap: 6px;
+    width: 100%;
 }
 
 .last-ten-games>div {
-    width: 16px;
-    height: 16px;
+    width: 100%;
+    height: 100%;
+    max-width: 16px;
+    max-height: 16px;
     background-color: var(--quadriary);
     border-radius: 50%;
+    aspect-ratio: 1/1;
 }
 
 .last-ten-games>div.win {
@@ -140,7 +155,23 @@
 
 
 /* mobile styles */
-@media (max-width: 600px) {}
+@media (max-width: 600px) {
+    .last-ten-games>div {
+        width: 100%;
+        height: 100%;
+    }
+
+    .stats-card-children {
+        font-weight: 350;
+        margin-top: 8px;
+
+    }
+
+    .last-ten-games {
+        padding-top: 12px;
+    }
+
+}
 
 
 
@@ -193,9 +224,16 @@
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
-.commander-stats-name {
+.commander-stats-right-side {
     width: 55%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.commander-stats-name {
+    width: 100%;
     text-align: start;
     padding: 12px;
     padding-right: 24px;
@@ -315,10 +353,6 @@
     justify-content: flex-start;
 }
 
-.commander-stats-card-children {
-    font-size: 36px;
-}
-
 .commander-stats-card {
     width: 100%;
     display: flex;
@@ -332,6 +366,13 @@
 
 }
 
+.commander-stats-card-children {
+    font-size: 36px;
+
+}
+
+
+
 .commander-stats-card-title {
     font-size: clamp(12px, 2vw, 24px);
     color: var(--text-secondary);
@@ -339,7 +380,7 @@
 }
 
 .commander-stats-card-children {
-    font-size: clamp(12px, 8vw, 48px);
+    font-size: clamp(12px, 6vw, 48px);
     width: 100%;
     height: 100%;
     padding-top: 4px;
@@ -350,7 +391,6 @@
 
 .commander-stats-last-ten {
     width: 100%;
-    height: 12%;
     padding-left: 16px;
 }
 

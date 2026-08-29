@@ -1,5 +1,5 @@
 import { formatRelativeDate, type Commander, type Game, type GameResult } from "./Game";
-import { loadGames } from "./LocalStorage";
+import { loadCommanderStats, loadPlayerStats } from "./LocalStorage";
 
 export type PlayerStats = {
     gamesTotal: number;
@@ -7,6 +7,7 @@ export type PlayerStats = {
     winLossDrawTotal: string;
     winLossDrawRate: [number, number, number];
     performance: number;
+    lastPerformance: number;
     lastPlayed: string;
     current21GameWinrate: number;
     highest21GameWinrate: number;
@@ -17,30 +18,41 @@ export type PlayerStats = {
     lastTenGames: GameResult[];
 }
 
+export const EMPTY_PLAYERSTATS: PlayerStats = {
+    gamesTotal: 0,
+    commandersPlayed: 0,
+    winLossDrawTotal: "0-0-0",
+    winLossDrawRate: [0, 0, 0],
+    performance: 0,
+    lastPerformance: 0,
+    lastPlayed: "Never",
+    current21GameWinrate: 0,
+    highest21GameWinrate: 0,
+    gamesThisMonth: 0,
+    gamesThisYear: 0,
+    currentWinstreak: 0,
+    longestWinstreak: 0,
+    lastTenGames: []
+}
+
 export type CommanderStats = {
     commander: Commander;
     gamesTotal: number;
     winLossDrawTotal: [number, number, number];
     winLossDrawRate: [number, number, number];
     performance: number;
+    lastPerformance: number;
     gamesThisMonth: number;
     currentStreak: number;
     longestStreak: number;
     lastTenGames: GameResult[]
 }
 
-export const loadCommanderStats = (): Map<string, CommanderStats> => {
-    const stored = localStorage.getItem("commanderStats");
 
-    const commanderStats = stored
-        ? new Map<string, CommanderStats>(JSON.parse(stored))
-        : new Map<string, CommanderStats>();
 
-    return commanderStats;
-}
+export const generateCommanderStats = (games: Game[]) => {
 
-export const generateCommanderStats = () => {
-    const games: Game[] = loadGames();
+    const oldCommanderStats = loadCommanderStats();
 
     const commanderGames = new Map<string, {
         commander: Commander;
@@ -66,6 +78,8 @@ export const generateCommanderStats = () => {
         const winLossDrawRatio = calculateWinLossDrawRate(winLossDrawTotal);
         const winStreaks = calculateWinStreaks(commanderGames.games)
 
+        const oldStats = oldCommanderStats.get(commanderId);
+
 
         commanderStats.set(commanderId, {
             commander: commanderGames.commander,
@@ -73,6 +87,7 @@ export const generateCommanderStats = () => {
             winLossDrawTotal: winLossDrawTotal,
             winLossDrawRate: winLossDrawRatio,
             performance: calculatePerformance(winLossDrawRatio),
+            lastPerformance: oldStats?.performance ?? 0,
             gamesThisMonth: calculateGamesThisMonthAndYear(commanderGames.games)[0],
             currentStreak: winStreaks[0],
             longestStreak: winStreaks[1],
@@ -80,17 +95,15 @@ export const generateCommanderStats = () => {
         });
     });
 
-    localStorage.setItem(
-        "commanderStats",
-        JSON.stringify(Array.from(commanderStats.entries()))
-    );
 
     return commanderStats;
 }
 
-export const loadStats = () => {
-    const games: Game[] = loadGames();
+export const generatePlayerStats = (games: Game[]) => {
 
+    const oldPlayerStats = loadPlayerStats();
+
+    // calculate new stats
     const winLossDrawTotal = calculateWinLossDrawTotal(games);
     const winLossDrawRatio = calculateWinLossDrawRate(winLossDrawTotal)
     const gamesThisMonthAndYear = calculateGamesThisMonthAndYear(games)
@@ -102,6 +115,7 @@ export const loadStats = () => {
         commandersPlayed: calculateCommandersPlayed(games),
         winLossDrawTotal: `${winLossDrawTotal[0]}-${winLossDrawTotal[1]}-${winLossDrawTotal[2]}`,
         performance: calculatePerformance(winLossDrawRatio),
+        lastPerformance: oldPlayerStats.performance,
         winLossDrawRate: winLossDrawRatio,
         lastPlayed: getMostRecentDate(games),
         current21GameWinrate: calculateCurrent21GameWinrate(games),
@@ -116,6 +130,18 @@ export const loadStats = () => {
 
     return stats;
 };
+
+
+
+
+
+
+
+
+
+
+// Helper functions
+
 
 const calculateCommandersPlayed = (games: Game[]): number => {
     const commandersPlayed: Commander[] = [];

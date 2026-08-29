@@ -4,7 +4,7 @@ export interface Commander {
   id: string;
   name: string;
   img_url: string | undefined;
-  colors: string[];
+  color_identity: string[];
 }
 
 
@@ -13,11 +13,12 @@ export interface Game {
   commander: Commander;
   result: GameResult;
   date: string;
+  commanderRecord: string;
 }
 
 // helper function to conver decimal to string percent
 export function formatToPercent(num: number): string {
-  return (num * 100).toFixed(0) + '%'
+  return parseFloat((num * 100).toFixed(1)) + '%'
 }
 
 // helper function to format string date to 

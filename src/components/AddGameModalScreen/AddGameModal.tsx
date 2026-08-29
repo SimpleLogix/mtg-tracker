@@ -5,28 +5,39 @@ import {
   addCommander,
   loadCommanders,
   removeCommander,
+  saveCommanderStats,
   saveGame,
+  savePlayerStats,
 } from "../../utils/LocalStorage";
-import SwipeButton from "./SwipeButton";
 import CommanderSearch from "./CommanderSearch";
-import { generateCommanderStats, type CommanderStats } from "../../utils/Stats";
+import {
+  generateCommanderStats,
+  generatePlayerStats,
+  type CommanderStats,
+  type PlayerStats,
+} from "../../utils/Stats";
+import PillButton from "./PillButton";
 
 interface AddGameModalProps {
   onClose: () => void;
   onGameAdded: (
     game: Game,
     commanderStats: Map<string, CommanderStats>,
+    playerStats: PlayerStats,
   ) => void;
+  commanderStats: Map<string, CommanderStats>;
 }
 
 export default function AddGameModal({
   onClose,
   onGameAdded,
+  commanderStats,
 }: AddGameModalProps) {
-  const [selectedCommander, setSelectedCommander] = useState<Commander | null>(
-    null,
-  );
   const [commanders, setCommanders] = useState<Commander[]>(loadCommanders);
+  const [selectedCommander, setSelectedCommander] = useState<Commander | null>(
+    commanders[0] || null,
+  );
+
   const [showInput, setShowInput] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [gameResult, setGameResult] = useState<GameResult>("Draw");
@@ -61,19 +72,38 @@ export default function AddGameModal({
     }
   };
 
-  // Save game to local storage
   const handleSaveGame = () => {
     if (selectedCommander) {
       const now = new Date();
 
+      // update Commander Win/Loss Record
+      const currentRecord = commanderStats.get(selectedCommander.id)
+        ?.winLossDrawTotal ?? [0, 0, 0];
+      const newRecord = [...currentRecord];
+      if (gameResult === "Win") newRecord[0]++;
+      if (gameResult === "Loss") newRecord[1]++;
+      if (gameResult === "Draw") newRecord[2]++;
+
+      // Create a new Game Object
       const newGame: Game = {
         id: crypto.randomUUID(),
         commander: selectedCommander,
         result: gameResult,
         date: now.toDateString(),
+        commanderRecord: newRecord.join("-"),
       };
-      saveGame(newGame);
-      onGameAdded(newGame, generateCommanderStats()); // send back the game and new commander stats
+
+      //save & return new list of games
+      const updatedGames = saveGame(newGame);
+      // generate stats from the list
+      const updatedPlayerStats = generatePlayerStats(updatedGames);
+      const updatedCommanderStats = generateCommanderStats(updatedGames);
+
+      // save to local storage
+      saveCommanderStats(updatedCommanderStats);
+      savePlayerStats(updatedPlayerStats);
+
+      onGameAdded(newGame, updatedCommanderStats, updatedPlayerStats);
       onClose();
     }
   };
@@ -148,7 +178,7 @@ export default function AddGameModal({
         </div>
       </div>
 
-      <SwipeButton gameResult={gameResult} setGameResult={setGameResult} />
+      <PillButton gameResult={gameResult} setGameResult={setGameResult} />
       <div className="save-button-wrapper">
         <button className="save-button" onClick={handleSaveGame}>
           <span className="material-symbols-outlined">save</span>

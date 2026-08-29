@@ -1,3 +1,9 @@
+// import {
+//   clearCommanders,
+//   clearGames,
+//   clearStats,
+// } from "../../utils/LocalStorage";
+
 interface BottomHomeShelfProps {
   setOpenAddGameModal: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenStatsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +35,23 @@ export default function BottomHomeShelf({
       >
         <span className="material-symbols-outlined">Edit</span>
       </button>
+
+      {/* <button
+        onClick={() => {
+          clearCommanders();
+          clearGames();
+          clearStats();
+        }}
+      >
+        <span
+          style={{
+            color: "var(--red)",
+          }}
+          className="material-symbols-outlined"
+        >
+          Warning
+        </span>
+      </button> */}
     </section>
   );
 }

@@ -24,7 +24,7 @@ export async function searchCommanders(query: string): Promise<ScryfallCard[]> {
   }
 
   const data = await response.json();
-  console.log(data)
+
 
   return data.data;
 }

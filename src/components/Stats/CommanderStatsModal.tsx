@@ -5,6 +5,7 @@ import WinrateBar from "./WinrateBar";
 import Last10Games from "./LastTenGames";
 import CommanderStatsCard from "./CommanderStatsCard";
 import type { CommanderStats } from "../../utils/Stats";
+import CommanderColors from "./CommanderColors";
 
 interface CommanderStatsModalProps {
   onClose: () => void;
@@ -26,7 +27,9 @@ export default function CommanderStatsModal({
               <div style={{ backgroundImage: `url(${commander.img_url})` }} />
             </div>
           </div>
-          <div className="commander-stats-name">{commander.name}
+          <div className="commander-stats-right-side">
+            <span className="commander-stats-name">{commander.name}</span>
+            <CommanderColors color_identity={commander.color_identity} />
           </div>
         </div>
 
@@ -51,9 +54,16 @@ export default function CommanderStatsModal({
               <div className="vertical-tick"></div>
               <CommanderStatsCard title="Performance">
                 <span>{formatToPercent(commanderStats.performance)}</span>
-                <span className="material-symbols-outlined delta-up">
-                  Arrow_Drop_Up
-                </span>
+                {commanderStats.performance >=
+                commanderStats.lastPerformance ? (
+                  <span className="material-symbols-outlined delta-up">
+                    Arrow_Drop_Up
+                  </span>
+                ) : (
+                  <span className="material-symbols-outlined delta-down">
+                    Arrow_Drop_Down
+                  </span>
+                )}
               </CommanderStatsCard>
             </div>
 

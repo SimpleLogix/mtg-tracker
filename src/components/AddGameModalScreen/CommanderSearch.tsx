@@ -16,7 +16,7 @@ export default function CommanderSearch({ onSelect }: CommanderSearchProps) {
       name: card.name,
       id: card.id,
       img_url: card.image_uris?.art_crop,
-      colors: card.color_identity,
+      color_identity: card.color_identity.reverse(),
     };
     onSelect(selectedCommander);
     setQuery("");
